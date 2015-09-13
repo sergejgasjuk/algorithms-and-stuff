@@ -1,0 +1,29 @@
+{
+  "name": "algorithms-and-stuff",
+  "version": "1.0.0",
+  "description": "algorithms and exercises",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sergejgasjuk/algorithms-and-stuff"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergejgasjuk/algorithms-and-stuff/issues"
+  },
+  "homepage": "https://github.com/sergejgasjuk/algorithms-and-stuff",
+  "devDependencies": {
+    "babelify": "^6.3.0",
+    "browserify": "^11.1.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "browser": {
+    "helpers": "./utils/helpers.js"
+  }
+}
