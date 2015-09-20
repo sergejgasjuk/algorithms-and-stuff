@@ -17,8 +17,6 @@ var _helpers = require("helpers");
 function bubbleSort(arr) {
   var newArr = arr.slice(); // create copy of input array
 
-  //console.time('BubbleSort time');  // start timer
-
   for (var i = newArr.length - 1; i >= 0; i -= 1) {
     for (var j = newArr.length - 1; j >= 0; j -= 1) {
       if (newArr[j] < newArr[j - 1]) {
@@ -27,8 +25,6 @@ function bubbleSort(arr) {
     }
   }
 
-  //console.timeEnd('BubbleSort time');  // end timer
-  //console.log('BubbleSort output: ' + newArr);  // show result
   return newArr;
 }
 
@@ -54,8 +50,6 @@ function injectionSort(arr) {
       // create copy of input array
   sortedItem = undefined;
 
-  //console.time('InjectionSort time');  // start timer
-
   for (var i = 0; i < newArr.length; i += 1) {
     sortedItem = newArr[i];
     for (var j = i - 1; j >= 0 && newArr[j] > sortedItem; j -= 1) {
@@ -64,8 +58,6 @@ function injectionSort(arr) {
     newArr[j + 1] = sortedItem;
   }
 
-  //console.timeEnd('InjectionSort time');  // end timer
-  //console.log('InjectionSort output: ' + newArr);  // show result
   return newArr;
 }
 
@@ -79,7 +71,6 @@ module.exports = exports["default"];
  * @return {Array}
  */
 
-// TODO: not working properly. requires fix
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -88,22 +79,19 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = mergeSort;
 
 function mergeSort(arr) {
-  var newArr = arr.slice(),
-      // create copy of input array
-  result = undefined;
+  var newArr = arr.slice(); // create copy of input array
 
-  if (newArr.length < 2) return newArr;
+  return (function mergeSortInner(arr) {
+    if (arr.length < 2) {
+      return arr;
+    }
 
-  var mid = Math.floor(newArr.length / 2),
-      left = newArr.slice(0, mid),
-      right = newArr.slice(mid);
+    var mid = Math.floor(arr.length / 2),
+        left = arr.slice(0, mid),
+        right = arr.slice(mid);
 
-  return merge(left, right);
-
-  //console.time('MergeSort time');  // start timer
-  //result = mergeSortFunc(newArr);
-  //console.timeEnd('MergeSort time');  // end timer
-  //console.log('MergeSort output: ' + result);  // show result
+    return merge(mergeSortInner(left), mergeSortInner(right));
+  })(newArr);
 }
 
 /**
@@ -119,9 +107,7 @@ function merge(leftPart, rightPart) {
     leftPart[0] < rightPart[0] ? result.push(leftPart.shift()) : result.push(rightPart.shift());
   }
 
-  result = result.concat(leftPart).concat(rightPart);
-
-  return result;
+  return result.concat(leftPart).concat(rightPart);
 }
 module.exports = exports["default"];
 
@@ -143,10 +129,10 @@ exports["default"] = quickSort;
 function quickSort(arr) {
   var newArr = arr.slice(); // create copy of input array
 
-  //console.time('QuickSort time');  // start timer
-
-  function quickSortFunc(arr) {
-    if (arr.length === 0) return [];
+  return (function quickSortInner(arr) {
+    if (arr.length === 0) {
+      return [];
+    }
 
     var pivot = arr[0],
         left = [],
@@ -156,12 +142,8 @@ function quickSort(arr) {
       arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
     }
 
-    return quickSortFunc(left).concat(pivot, quickSortFunc(right));
-  }
-
-  return quickSortFunc(newArr);
-  //console.timeEnd('QuickSort time');  // end timer
-  //console.log('QuickSort output: ' + result);  // show result js_courses-sorting-algorithms
+    return quickSortInner(left).concat(pivot, quickSortInner(right));
+  })(newArr);
 }
 
 module.exports = exports["default"];
@@ -187,8 +169,6 @@ function selectionSort(arr) {
       // create copy of input array
   min = undefined;
 
-  //console.time('SelectionSort time');  // start timer
-
   for (var i = 0; i < newArr.length - 1; i += 1) {
     min = i;
     for (var j = i + 1; j < newArr.length; j += 1) {
@@ -199,8 +179,6 @@ function selectionSort(arr) {
     (0, _helpers.swapElements)(newArr, i, min);
   }
 
-  //console.timeEnd('SelectionSort time');  // end timer
-  //console.log('SelectionSort output: ' + newArr);  // show result
   return newArr;
 }
 
@@ -233,6 +211,35 @@ var _algorithmsSelectionSort = require("./algorithms/selectionSort");
 
 var _algorithmsSelectionSort2 = _interopRequireDefault(_algorithmsSelectionSort);
 
+var bubble = (0, _helpers.timingDecorator)(_algorithmsBubbleSort2["default"]),
+    injection = (0, _helpers.timingDecorator)(_algorithmsInjectionSort2["default"]),
+    merge = (0, _helpers.timingDecorator)(_algorithmsMergeSort2["default"]),
+    quick = (0, _helpers.timingDecorator)(_algorithmsQuickSort2["default"]),
+    selection = (0, _helpers.timingDecorator)(_algorithmsSelectionSort2["default"]),
+    arrToSort = (0, _helpers.generateRandomArray)(25);
+
+var bubbleSortResult = bubble(arrToSort);
+var injectionSortResult = injection(arrToSort);
+var mergeSortResult = merge(arrToSort);
+var quickSortResult = quick(arrToSort);
+var selectionSortResult = selection(arrToSort);
+
+console.log("Array To Sort: " + arrToSort);
+
+// Bubble
+console.log("Bubble Sort Result: " + bubbleSortResult.result + " \n", "Bubble Sort Time: " + bubbleSortResult.endTime);
+// Injection
+console.log("Injection Sort Result: " + injectionSortResult.result + " \n", "Injection Sort Time: " + injectionSortResult.endTime);
+
+// Merge
+console.log("Merge Sort Result: " + mergeSortResult.result + " \n", "Merge Sort Time: " + mergeSortResult.endTime);
+
+// Quick
+console.log("Quick Sort Result: " + quickSortResult.result + " \n", "Quick Sort Time: " + quickSortResult.endTime);
+
+// Selection
+console.log("Selection Sort Result: " + selectionSortResult.result + " \n", "Selection Sort Time: " + selectionSortResult.endTime);
+
 },{"./algorithms/bubbleSort":1,"./algorithms/injectionSort":2,"./algorithms/mergeSort":3,"./algorithms/quickSort":4,"./algorithms/selectionSort":5,"helpers":7}],7:[function(require,module,exports){
 
 /**
@@ -247,11 +254,12 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.generateRandomArray = generateRandomArray;
 exports.swapElements = swapElements;
+exports.timingDecorator = timingDecorator;
 
 function generateRandomArray(arrayLength) {
   var randomArr = [];
 
-  arrayLength = arrayLength || 15;
+  arrayLength = arrayLength || 25;
 
   for (var i = 0; i < arrayLength; i += 1) {
     randomArr.push(Math.floor(Math.random() * 100));
@@ -278,6 +286,23 @@ function swapElements(inputArray, firstElementIndex, secondElementIndex) {
   inputArray[secondElementIndex] = temp;
 
   return inputArray;
+}
+
+/**
+ * Time benchmark decorator
+ * @param func {Function}
+ * @param timer {String}
+ * @return result, endTime {Object}
+ */
+
+function timingDecorator(func, timer) {
+  return function () {
+    var startTime = performance.now();
+    var result = func.apply(this, arguments);
+    var endTime = (performance.now() - startTime).toFixed(6);
+
+    return { result: result, endTime: endTime };
+  };
 }
 
 },{}]},{},[6]);

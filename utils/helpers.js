@@ -7,7 +7,7 @@
 export function generateRandomArray(arrayLength) {
   let randomArr = [];
 
-  arrayLength = arrayLength || 15;
+  arrayLength = arrayLength || 25;
 
   for (let i = 0; i < arrayLength; i += 1) {
     randomArr.push(Math.floor(Math.random() * 100));
@@ -33,4 +33,20 @@ export function swapElements(inputArray, firstElementIndex, secondElementIndex) 
   inputArray[secondElementIndex] = temp;
 
   return inputArray;
+}
+
+/**
+ * Time benchmark decorator
+ * @param func {Function}
+ * @param timer {String}
+ * @return result, endTime {Object}
+ */
+export function timingDecorator(func, timer) {
+  return function() {
+    let startTime = performance.now();
+    let result = func.apply(this, arguments);
+    let endTime = (performance.now() - startTime).toFixed(6);
+
+    return {result, endTime};
+  }
 }

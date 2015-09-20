@@ -8,12 +8,12 @@
 export default function quickSort(arr) {
   let newArr = arr.slice();  // create copy of input array
 
-  //console.time('QuickSort time');  // start timer
+  return (function quickSortInner(arr) {
+    if (arr.length === 0) {
+      return [];
+    }
 
-  function quickSortFunc(arr){
-    if (arr.length === 0) return [];
-
-    var pivot = arr[0],
+    let pivot = arr[0],
         left = [],
         right = [];
 
@@ -21,10 +21,7 @@ export default function quickSort(arr) {
       arr[i] < pivot ? left.push(arr[i]) : right.push(arr[i]);
     }
 
-    return quickSortFunc(left).concat(pivot, quickSortFunc(right));
-  }
+    return quickSortInner(left).concat(pivot, quickSortInner(right));
 
-  return quickSortFunc(newArr);
-  //console.timeEnd('QuickSort time');  // end timer
-  //console.log('QuickSort output: ' + result);  // show result js_courses-sorting-algorithms
+  })(newArr);
 }

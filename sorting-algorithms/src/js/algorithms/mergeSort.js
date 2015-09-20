@@ -5,23 +5,20 @@
  * @return {Array}
  */
 
-// TODO: not working properly. requires fix
 export default function mergeSort(arr) {
-  let newArr = arr.slice(),  // create copy of input array
-      result;
+  let newArr = arr.slice();  // create copy of input array
 
-  if (newArr.length < 2) return newArr;
+  return (function mergeSortInner(arr) {
+    if (arr.length < 2) {
+      return arr;
+    }
 
-  var mid = Math.floor(newArr.length / 2),
-    left = newArr.slice(0, mid),
-    right = newArr.slice(mid);
+    let mid = Math.floor(arr.length / 2),
+        left = arr.slice(0, mid),
+        right = arr.slice(mid);
 
-  return merge(left, right);
-
-  //console.time('MergeSort time');  // start timer
-  //result = mergeSortFunc(newArr);
-  //console.timeEnd('MergeSort time');  // end timer
-  //console.log('MergeSort output: ' + result);  // show result
+    return merge(mergeSortInner(left), mergeSortInner(right));
+  })(newArr);
 }
 
 /**
@@ -37,7 +34,5 @@ function merge(leftPart, rightPart) {
     leftPart[0] < rightPart[0] ? result.push(leftPart.shift()) : result.push(rightPart.shift());
   }
 
-  result = result.concat(leftPart).concat(rightPart);
-
-  return result;
+  return result.concat(leftPart).concat(rightPart);
 }

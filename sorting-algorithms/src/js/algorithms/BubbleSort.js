@@ -1,3 +1,21 @@
+import {swapElements as swap} from "helpers";
+
 /**
- * Created by Administrator on 13.09.2015.
+ * Sorts input array using bubble algorithm. Returns sorted array.
+ * @param arr {Array}
+ * @returns {Array}
  */
+export default function bubbleSort(arr) {
+  let newArr = arr.slice();  // create copy of input array
+
+  for (let i = newArr.length - 1; i >= 0; i -= 1) {
+    for (var j = newArr.length - 1; j >= 0; j -= 1) {
+      if (newArr[j] < newArr[j - 1]) {
+        swap(newArr, j, j - 1);
+      }
+    }
+  }
+
+  return newArr;
+}
+

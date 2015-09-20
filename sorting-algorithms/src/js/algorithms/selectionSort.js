@@ -10,9 +10,7 @@ export default function selectionSort(arr) {
   let newArr = arr.slice(),  // create copy of input array
       min;
 
-  //console.time('SelectionSort time');  // start timer
-
-  for (var i = 0; i < newArr.length-1; i += 1) {
+  for (var i = 0; i < newArr.length - 1; i += 1) {
     min = i;
     for (var j = i + 1; j < newArr.length; j += 1) {
       if (newArr[j] < newArr[min]) {
@@ -22,7 +20,5 @@ export default function selectionSort(arr) {
     swap(newArr, i, min);
   }
 
-  //console.timeEnd('SelectionSort time');  // end timer
-  //console.log('SelectionSort output: ' + newArr);  // show result
   return newArr;
 }
