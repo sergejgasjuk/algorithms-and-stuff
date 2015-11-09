@@ -2,7 +2,8 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
-out
-gen
+.idea/
+node_modules/
+build/
+dest/
 
