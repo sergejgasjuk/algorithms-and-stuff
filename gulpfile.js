@@ -29,7 +29,7 @@ gulp.task('sorting-algorithms-build', ['sorting-js', 'sorting-html'], function()
 // Binary Search Tree
 gulp.task('BST-js', function() {
   return browserify('./binary-search-tree/src/js/main.js')
-    //.transform(babelify)
+    .transform(babelify)
     .bundle()
     .pipe(source('main.js'))
     .pipe(gulp.dest('./binary-search-tree/build/js/'));
@@ -41,7 +41,7 @@ gulp.task('BST-html', function() {
 });
 
 gulp.task('BST-watch', function(){
-  gulp.watch('./binary-search-tree/src/**/*', ['sorting-html', 'sorting-js']);
+  gulp.watch('./binary-search-tree/src/**/*', ['BST-js', 'BST-html']);
 });
 
 gulp.task('BST-build', ['BST-js', 'BST-html'], function(){
