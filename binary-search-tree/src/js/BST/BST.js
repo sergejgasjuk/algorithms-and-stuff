@@ -5,11 +5,11 @@ class BST {
     this.root = null;
     
     if (initialNodes.length) {
-      initialNodes.forEach((i) => this.insert(i));
+      initialNodes.forEach((i) => this.insertNode(i));
     }
   }
 
-  insert(key) {
+  insertNode(key) {
     let newKey = Math.ceil(parseInt(key, 10));
 
     if (isNaN(newKey) || newKey > 100) {
@@ -47,7 +47,7 @@ class BST {
     }
   }
   
-  delete(key) {
+  deleteNode(key) {
     // TODO: edit and finish
     let current = this.root;
     let parent = this.root;
@@ -66,6 +66,7 @@ class BST {
 
       if (!current) {
         console.log("not found");
+        console.log(this.root);
         return false;
       }
     }
@@ -103,11 +104,25 @@ class BST {
         parent.right = current.right;
       }
     }
-    
+    //Case 3 : if node to be deleted has two children
+    else if (current.left && current.right) {
+      let successor = this._findSuccessor(current);
+
+      if (current === this.root) {
+        this.root = successor;
+      } else if (isLeftChild) {
+        parent.left = successor;
+      } else {
+        parent.right = successor;
+      }
+      successor.left = current.left;
+    }
+
     console.log(this.root);
+    return true;
   }
   
-  findSuccessor(node) {
+  _findSuccessor(node) {
     let successor = null;
     let successorParent = null;
     let current = node.right;
@@ -126,7 +141,7 @@ class BST {
     return successor;
   } 
   
-  find(key) {
+  findNode(key) {
     let current;
     
     if (isNaN(key)) {
@@ -148,7 +163,7 @@ class BST {
     return false;
   }
   
-  findMax(node = this.root) {
+  findMaxNode(node = this.root) {
     let max = node;    
 
     if (!max) {
@@ -159,11 +174,11 @@ class BST {
       max = max.right;
     }
     
-    this.displayNode(max.data);
+    this._displayNode(max.data);
     return max;
   }
   
-  findMin(node = this.root) {
+  findMinNode(node = this.root) {
     let min = node;
 
     if (!min) {
@@ -174,7 +189,7 @@ class BST {
       min = min.left;
     }
 
-    this.displayNode(min.data);
+    this._displayNode(min.data);
     return min;
   }
   
@@ -187,10 +202,10 @@ class BST {
       traverse(node.left, callback);
       callback(node.data);
       traverse(node.right, callback);
-    })(this.root, this.displayNode);
+    })(this.root, this._displayNode);
   }
   
-  displayNode(node) {
+  _displayNode(node) {
     console.log(node);
   }
 }
