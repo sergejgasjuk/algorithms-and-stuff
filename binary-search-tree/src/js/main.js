@@ -1,6 +1,6 @@
 import BST from "./BST/BST";
 
-var newTree = new BST(6,3,4,13,64, 99, 101, 36, 52, 11, 27);
+var newTree = new BST(10, 18, 17);
 
 //newTree
 //  .insert(20)
@@ -8,5 +8,7 @@ var newTree = new BST(6,3,4,13,64, 99, 101, 36, 52, 11, 27);
 //  .insert(35)
 //  .insert(7);
 
-newTree.findMax();
-newTree.findMin();
+//newTree.traversal();
+//newTree.search(13);
+newTree.delete(18);
+newTree.traversal();
