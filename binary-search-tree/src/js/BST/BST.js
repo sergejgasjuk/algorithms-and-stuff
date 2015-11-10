@@ -1,8 +1,12 @@
 import Node from "./Node";
 
 class BST {
-  constructor(){
+  constructor(...initialNodes){
     this.root = null;
+    
+    if (initialNodes.length) {
+      initialNodes.forEach((i) => this.insert(i));
+    }
   }
 
   insert(key) {
@@ -52,7 +56,7 @@ class BST {
 
     current = this.root;
    
-    while (current) {
+    while(current) {
       if (current.data === key) {
         return true;
       } else if (current.data > key) {
@@ -63,6 +67,36 @@ class BST {
     }
     
     return false;
+  }
+  
+  findMax() {
+    let max = this.root;
+    
+    if (!max) {
+      return false;
+    }
+    
+    while(max.right) {
+      max = max.right;
+    }
+    
+    this.displayNode(max.data);
+    return max;
+  }
+  
+  findMin() {
+    let min = this.root;
+
+    if (!min) {
+      return false;
+    }
+
+    while(min.left) {
+      min = min.left;
+    }
+
+    this.displayNode(min.data);
+    return min;
   }
   
   traversal() {
