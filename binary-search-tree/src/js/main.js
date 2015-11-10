@@ -7,4 +7,5 @@ newTree
   .insert(12)
   .insert(35)
   .insert(7);
-newTree.log();
+
+newTree.traversal();

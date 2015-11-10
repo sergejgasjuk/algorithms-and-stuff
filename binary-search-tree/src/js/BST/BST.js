@@ -5,14 +5,14 @@ class BST {
     this.root = null;
   }
 
-  insert(data) {
-    let inputData = Math.ceil(parseInt(data, 10));
+  insert(key) {
+    let newKey = Math.ceil(parseInt(key, 10));
 
-    if (isNaN(inputData) || inputData > 100) {
+    if (isNaN(newKey) || newKey > 100) {
       return false;
     }
 
-    let newNode = new Node(inputData);
+    let newNode = new Node(newKey);
 
     if (!this.root) {
       this.root = newNode;
@@ -25,13 +25,13 @@ class BST {
     while(true) {
       parent = current;
 
-      if(inputData < current.data){
+      if(newKey < current.data){
         current = current.left;
         if(!current){
           parent.left = newNode;
           return this;
         }
-      } else if (inputData > current.data) {
+      } else if (newKey > current.data) {
         current = current.right;
         if(!current) {
           parent.right = newNode;
@@ -42,9 +42,43 @@ class BST {
       }
     }
   }
+  
+  search(key) {
+    let current, parent;
+    
+    if (isNaN(key)) {
+      return false;
+    }
 
-  log() {
-    console.log(this.root);
+    current = this.root;
+   
+    while (current) {
+      if (current.data === key) {
+        return true;
+      } else if (current.data > key) {
+        current = current.left;
+      } else {
+        current = current.right;
+      }
+    }
+    
+    return false;
+  }
+  
+  traversal() {
+    return (function traverse(node, callback) {
+      if (!node) {
+        return false;
+      }
+      
+      traverse(node.left, callback);
+      callback(node.data);
+      traverse(node.right, callback);
+    })(this.root, this.displayNode);
+  }
+  
+  displayNode(val) {
+    console.log(val);
   }
 }
 
