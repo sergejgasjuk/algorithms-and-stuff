@@ -1,2 +1,4 @@
-# algorithms-and-stuff
-algorithms, interesting tasks/exercises, js
+# Algorithms and other interesting things
+## sorting algorithms
+## binary search tree
+## searching algorithms

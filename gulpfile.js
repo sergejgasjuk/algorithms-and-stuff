@@ -9,7 +9,7 @@ gulp.task('sorting-js', function() {
   return browserify('./sorting-algorithms/src/js/main.js')
     .transform(babelify)
     .bundle()
-    .pipe(source('build.js'))
+    .pipe(source('main.js'))
     .pipe(gulp.dest('./sorting-algorithms/build/js/'));
 });
 
