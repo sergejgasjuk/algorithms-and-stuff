@@ -135,7 +135,7 @@ class BST {
       successor.left = nodeToDelete.left;
     }
     
-    this._displayNode('Deleted Node: ', nodeToDelete.data);
+    this._display('Deleted Node: ', nodeToDelete.data);
     return this;
   }
 
@@ -179,7 +179,7 @@ class BST {
    
     while(nodeToFind) {
       if (nodeToFind.data === key) {
-        this._displayNode(nodeToFind);
+        this._display(nodeToFind);
         return nodeToFind;
       } else if (nodeToFind.data > key) {
         nodeToFind = nodeToFind.left;
@@ -194,7 +194,6 @@ class BST {
   /**
    * Finds the Max Node in the Tree
    * @param {Node} node
-   * @return {Node}
    */
   findMaxNode(node = this.root) {
     let max = node;    
@@ -207,14 +206,13 @@ class BST {
       max = max.right;
     }
     
-    this._displayNode(max.data);
+    this._display(max.data);
     return max;
   }
 
   /**
    * Finds the Min Node in the Tree
    * @param {Node} node
-   * @return {Node}
    */
   findMinNode(node = this.root) {
     let min = node;
@@ -227,15 +225,16 @@ class BST {
       min = min.left;
     }
 
-    this._displayNode(min.data);
+    this._display(min.data);
     return min;
   }
 
   /**
-   * Traverses Tree in-order way
+   * Traverses Tree in-order way, prints nodes key
    */
   traversal() {
-    this._displayNode('Tree: ', this.root);
+    this._display('Tree: ', this.root);
+    
     return (function traverse(node, callback) {
       if (!node) {
         return false;
@@ -244,11 +243,27 @@ class BST {
       traverse(node.left, callback);
       callback(node.data);
       traverse(node.right, callback);
-    })(this.root, this._displayNode);
+    })(this.root, this._display);
   }
   
-  _displayNode(...node) {
-    console.log(...node);
+  /**
+   * Return height of the Tree
+   */
+  getHeight() {
+    let height = (function depth(node){
+      if (!node) {
+        return 0;
+      }
+      
+      return Math.max(depth(node.left), depth(node.right)) + 1;
+    })(this.root);
+    
+    this._display('Tree height: ', height);
+    return height;
+  }
+  
+  _display(...args) {
+    console.log(...args);
   }
 }
 

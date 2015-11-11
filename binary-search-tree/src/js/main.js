@@ -10,3 +10,5 @@ newTree
   .insertNode(50)
   .deleteNode(15)
   .traversal();
+
+newTree.getHeight();
