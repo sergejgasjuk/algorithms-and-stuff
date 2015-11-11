@@ -1,6 +1,11 @@
 import Node from "./Node";
 
+/** Class BST(Binary Search Tree)  */
 class BST {
+  /**
+   * Create a Binary Seacrh Tree.
+   * @param {number} initialNodes - initial nodes
+   */
   constructor(...initialNodes){
     this.root = null;
     
@@ -9,9 +14,14 @@ class BST {
     }
   }
 
+  /**
+   * Insert the new Node in Tree
+   * @param {number} key - new Node key
+   */
   insertNode(key) {
     let newKey = Math.ceil(parseInt(key, 10));
-
+    
+    // check if key is integer and not bigger then 100
     if (isNaN(newKey) || newKey > 100) {
       return false;
     }
@@ -25,103 +35,115 @@ class BST {
 
     let current = this.root;
     let parent;
-
+    
+    // search for a place to insert new node
     while(true) {
       parent = current;
-
+      
+      // if key is smaller then current node - go left
       if(newKey < current.data){
         current = current.left;
         if(!current){
           parent.left = newNode;
           return this;
         }
-      } else if (newKey > current.data) {
+      }
+      // if key is larger then current node - go right
+      else if (newKey > current.data) {
         current = current.right;
         if(!current) {
           parent.right = newNode;
           return this;
         }
-      } else {
+      }
+      // don't allow duplicates
+      else {        
         return false;
       }
     }
   }
-  
-  deleteNode(key) {
-    // TODO: edit and finish
-    let current = this.root;
-    let parent = this.root;
-    let isLeftChild = false;
 
-    while(current.data !== key) {
-      parent = current;     
+  /**
+   * Delete the Node from Tree
+   * @param {number} key - key of Node to be deleted
+   */
+  deleteNode(key) {
+    let nodeToDelete = this.root;
+    let parent = this.root;
+    let isLeftChild;
+    
+    // Search for NodeToDelete in the Tree
+    while(nodeToDelete.data !== key) {
+      parent = nodeToDelete;     
       
-      if (current.data > key) {
-        isLeftChild = true;
-        current = current.left;
+      if (nodeToDelete.data > key) {
+        nodeToDelete = nodeToDelete.left;
       } else {
-        isLeftChild = false;
-        current = current.right;
+        nodeToDelete = nodeToDelete.right;
       }
 
-      if (!current) {
-        console.log("not found");
-        console.log(this.root);
+      if (!nodeToDelete) {
         return false;
       }
     }
-
-    //Case 1: if node to be deleted has no children
-    if (!current.left && !current.right) {
-      if (current === this.root) {
+    
+    // Check if NodeToDelete is left child
+    isLeftChild = nodeToDelete.data < parent.data;
+    
+    // Case if nodeToDelete has no children
+    if (!nodeToDelete.left && !nodeToDelete.right) {
+      if (nodeToDelete === this.root) {
         this.root = null;
-        //return;
-      }      
-      if (isLeftChild) {
+      } else if (isLeftChild) {
         parent.left = null;
       } else {
         parent.right = null;
       }
     }
-    //Case 2 : if node to be deleted has only one child
-    else if (!current.right) {
-      if (current === this.root) {
-        this.root = current.left;
-        //return;
+    // Case if nodeToDelete has one child (Left)
+    else if (!nodeToDelete.right) {
+      if (nodeToDelete === this.root) {
+        this.root = nodeToDelete.left;
       } else if (isLeftChild) {
-        parent.left = current.left;
+        parent.left = nodeToDelete.left;
       } else {
-        parent.right = current.left;
+        parent.right = nodeToDelete.left;
       }
     }
-    else if (!current.left) {
-      if (current === this.root) {
-        this.root = current.right;
-        //return;
+    // Case if nodeToDelete has one child (Right)
+    else if (!nodeToDelete.left) {
+      if (nodeToDelete === this.root) {
+        this.root = nodeToDelete.right;
       } else if (isLeftChild) {
-        parent.left = current.right;
+        parent.left = nodeToDelete.right;
       } else {
-        parent.right = current.right;
+        parent.right = nodeToDelete.right;
       }
     }
-    //Case 3 : if node to be deleted has two children
-    else if (current.left && current.right) {
-      let successor = this._findSuccessor(current);
+    //Case if nodeToDelete has two children
+    else if (nodeToDelete.left && nodeToDelete.right) {
+      let successor = this._findSuccessor(nodeToDelete);
 
-      if (current === this.root) {
+      if (nodeToDelete === this.root) {
         this.root = successor;
       } else if (isLeftChild) {
         parent.left = successor;
       } else {
         parent.right = successor;
       }
-      successor.left = current.left;
+      
+      successor.left = nodeToDelete.left;
     }
-
-    console.log(this.root);
-    return true;
+    
+    this._displayNode('Deleted Node: ', nodeToDelete.data);
+    return this;
   }
-  
+
+  /**
+   * Private Method.
+   * Finds the successor of node to be deleted
+   * @param {Node} node - node to be deleted
+   */
   _findSuccessor(node) {
     let successor = null;
     let successorParent = null;
@@ -139,30 +161,41 @@ class BST {
     }
     
     return successor;
-  } 
+  }
   
+  /**
+   * Finds the Node in the Tree
+   * @param {number} key - key of Node to find
+   * @return {Node}
+   */
   findNode(key) {
-    let current;
+    let nodeToFind;
     
     if (isNaN(key)) {
       return false;
     }
 
-    current = this.root;
+    nodeToFind = this.root;
    
-    while(current) {
-      if (current.data === key) {
-        return current;
-      } else if (current.data > key) {
-        current = current.left;
+    while(nodeToFind) {
+      if (nodeToFind.data === key) {
+        this._displayNode(nodeToFind);
+        return nodeToFind;
+      } else if (nodeToFind.data > key) {
+        nodeToFind = nodeToFind.left;
       } else {
-        current = current.right;
+        nodeToFind = nodeToFind.right;
       }
     }    
     
     return false;
   }
-  
+
+  /**
+   * Finds the Max Node in the Tree
+   * @param {Node} node
+   * @return {Node}
+   */
   findMaxNode(node = this.root) {
     let max = node;    
 
@@ -177,7 +210,12 @@ class BST {
     this._displayNode(max.data);
     return max;
   }
-  
+
+  /**
+   * Finds the Min Node in the Tree
+   * @param {Node} node
+   * @return {Node}
+   */
   findMinNode(node = this.root) {
     let min = node;
 
@@ -192,8 +230,12 @@ class BST {
     this._displayNode(min.data);
     return min;
   }
-  
+
+  /**
+   * Traverses Tree in-order way
+   */
   traversal() {
+    this._displayNode('Tree: ', this.root);
     return (function traverse(node, callback) {
       if (!node) {
         return false;
@@ -205,8 +247,8 @@ class BST {
     })(this.root, this._displayNode);
   }
   
-  _displayNode(node) {
-    console.log(node);
+  _displayNode(...node) {
+    console.log(...node);
   }
 }
 
