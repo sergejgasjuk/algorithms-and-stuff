@@ -166,7 +166,6 @@ class BST {
   /**
    * Finds the Node in the Tree
    * @param {number} key - key of Node to find
-   * @return {Node}
    */
   findNode(key) {
     let nodeToFind;
