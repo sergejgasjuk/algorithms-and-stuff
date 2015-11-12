@@ -12,3 +12,4 @@ newTree
   .traversal();
 
 newTree.getHeight();
+newTree.toString();

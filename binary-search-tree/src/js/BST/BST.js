@@ -231,9 +231,7 @@ class BST {
   /**
    * Traverses Tree in-order way, prints nodes key
    */
-  traversal() {
-    this._display('Tree: ', this.root);
-    
+  traversal() { 
     return (function traverse(node, callback) {
       if (!node) {
         return false;
@@ -247,6 +245,7 @@ class BST {
   
   /**
    * Return height of the Tree
+   * @return {Number} height - depth of the Tree
    */
   getHeight() {
     let height = (function depth(node){
@@ -259,6 +258,17 @@ class BST {
     
     this._display('Tree height: ', height);
     return height;
+  }
+
+  /**
+   * Converts Tree into string 
+   * @return {String} treeString - string representation of the Tree
+   */
+  toString() {
+    let treeString = JSON.stringify(this.root, null, 2);
+    
+    this._display(treeString);
+    return treeString;
   }
   
   _display(...args) {
