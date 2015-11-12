@@ -48,5 +48,27 @@ gulp.task('BST-build', ['BST-js', 'BST-html'], function(){
   gulp.start('BST-watch');
 });
 
+// Searching Algorithms
+gulp.task('searching-js', function() {
+  return browserify('./searching-algorithms/src/js/main.js')
+    .transform(babelify)
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('./searching-algorithms/build/js/'));
+});
+
+gulp.task('searching-html', function() {
+  gulp.src('./searching-algorithms/src/index.html')
+    .pipe(gulp.dest('./searching-algorithms/build'))
+});
+
+gulp.task('searching-algorithms-watch', function(){
+  gulp.watch('./searching-algorithms/src/**/*', ['searching-html', 'searching-js']);
+});
+
+gulp.task('searching-algorithms-build', ['searching-js', 'searching-html'], function(){
+  gulp.start('searching-algorithms-watch');
+});
+
 // Default Task
 gulp.task('default', []);
