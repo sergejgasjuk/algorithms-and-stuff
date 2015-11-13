@@ -1,24 +1,59 @@
-
-export default function binarySearch(arr, target) {
-  let start = 0,
-      end = arr.length - 1;
+/**
+ * Iterative version of binary search algorithm
+ * @param {Array} arr - input array
+ * @param {Number} target - item which should be found
+ * @returns {Number} index of item in array or -1 if not found
+ */
+export function binarySearch(arr, target) {
+  let min = 0,
+      max = arr.length - 1;
+  
+  while (min <= max) {
+    let mid = Math.floor(min + ((max - min) / 2));
+    
+    if (arr[mid] === target) {
+      return mid;
+    } else if (arr[mid] < target) {
+      min = mid + 1;
+    } else {
+      max = mid - 1;
+    }  
+  }
+  
+  return -1;
 }
 
-export default function binarySearch_recursive(arr, target) {
-  if (!arr.length) {
-    return -1;
-  }
-
-  let start = 0;
-  let end = arr.length - 1;
-  //let middle = Math.floor(start + ((end - start) / 2));
-  let middle = Math.floor((start + end) / 2);
-
-  if (arr[middle] > target) {
-    return binarySearch(arr.slice(start, middle - 1), target);
-  } else if (arr[middle] < target) {
-    return binarySearch(arr.slice(middle + 1, end), target);
-  }
-
-  return middle;
+/**
+ * Recursive version of binary search algorithm
+ * @param {Array} arr - input array
+ * @param {Number} target - item which should be found
+ * @returns {Number} index of item in array or -1 if not found
+ */
+export function binarySearch_recursive(arr, target) {
+  return (function search(min, max){
+    let mid = Math.floor(min + ((max - min) / 2));
+    
+    if (min > max) {
+      return -1;
+    }
+    
+    if (arr[min] === target) {
+      return min;
+    }
+    
+    if (arr[max] === target) {
+      return max;
+    }
+    
+    if (arr[mid] === target) {
+      return mid;
+    }
+    
+    if (arr[mid] > target) {
+      return search(min + 1, mid - 1);
+    } else if (arr[mid] < target) {
+      return search(mid + 1, max - 1);
+    }
+    
+  })(0, arr.length - 1);
 }

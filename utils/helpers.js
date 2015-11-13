@@ -1,19 +1,18 @@
 
 /**
  *  Generates Random Array
- * @param arrayLength {Number}
+ * @param arrayLength 
+ * @param maxInt
  * @returns {Array}
  */
-export function generateRandomArray(arrayLength) {
-  let randomArr = [];
-
-  arrayLength = arrayLength || 25;
-
-  for (let i = 0; i < arrayLength; i += 1) {
-    randomArr.push(Math.floor(Math.random() * 100));
+export function generateRandomArray(arrayLength = 25, maxInt = 100) {
+  let uniqueSet = new Set();      
+  
+  while(uniqueSet.size !== arrayLength) {
+    uniqueSet.add(Math.floor(Math.random() * maxInt));
   }
-
-  return randomArr;
+  
+  return Array.from(uniqueSet);
 }
 
 /**
@@ -39,7 +38,7 @@ export function swapElements(inputArray, firstElementIndex, secondElementIndex) 
  * Time benchmark decorator
  * @param func {Function}
  * @param timer {String}
- * @return result, endTime {Object}
+ //* @return result, endTime {Object}
  */
 export function timingDecorator(func, timer) {
   return function() {

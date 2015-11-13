@@ -11,7 +11,7 @@ let bubble = bench(bubbleSort),
     merge = bench(mergeSort),
     quick = bench(quickSort),
     selection = bench(selectionSort),
-    arrToSort = arrGenerator(25);
+    arrToSort = arrGenerator(500);
 
 let bubbleSortResult = bubble(arrToSort);
 let injectionSortResult = injection(arrToSort);
