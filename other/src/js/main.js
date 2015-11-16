@@ -1,3 +1,5 @@
-import * as greatestCommonDivisor from "./stuff/GCD";
+import * as GCD from "./stuff/greatest-common-divisor";
+import * as fibo from "./stuff/fibonacci";
 
-console.log(greatestCommonDivisor.GCD_recursive(4,12));
+console.log(fibo.fibo_iterative(7));
+
