@@ -70,5 +70,27 @@ gulp.task('searching-algorithms-build', ['searching-js', 'searching-html'], func
   gulp.start('searching-algorithms-watch');
 });
 
+// Other stuff
+gulp.task('os-js', function() {
+  return browserify('./other/src/js/main.js')
+    .transform(babelify)
+    .bundle()
+    .pipe(source('main.js'))
+    .pipe(gulp.dest('./other/build/js/'));
+});
+
+gulp.task('os-html', function() {
+  gulp.src('./other/src/index.html')
+    .pipe(gulp.dest('./other/build'))
+});
+
+gulp.task('os-watch', function(){
+  gulp.watch('./other/src/**/*', ['os-html', 'os-js']);
+});
+
+gulp.task('os-build', ['os-js', 'os-html'], function(){
+  gulp.start('os-watch');
+});
+
 // Default Task
 gulp.task('default', []);
