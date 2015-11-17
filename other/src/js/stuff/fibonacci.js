@@ -1,3 +1,10 @@
+/**
+ * Fibonacci algorithm
+ * Returns the n'th number of fibonacci's sequence
+ * @param {Number} n
+ * @return {Number} n
+ */
+
 export function fibo_iterative(n) {
   if (n < 0) {
     return false;
@@ -41,10 +48,8 @@ export function fibo_recursive(n) {
       return false;
     }
     
-    if (!cache.hasOwnProperty(n)) {
-      return cache[n] = fibo(n - 1) + fibo(n - 2);
-    }
-    
-    return cache[n];
+    return cache.hasOwnProperty(n)
+      ? cache[n]
+      : cache[n] = fibo(n - 1) + fibo(n - 2);
   })(n);
 }
