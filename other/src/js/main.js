@@ -1,4 +1,5 @@
 import {timingDecorator as bench} from "helpers";
+import findMissingNum from "./stuff/findMissingNumInArray";
 import * as GCD from "./stuff/greatest-common-divisor";
 import * as fibo from "./stuff/fibonacci";
 
@@ -21,3 +22,6 @@ console.log(`fibo iterative: ${fibIterativeResult.result} \n`,
 console.log(`fibo bad recursion: ${fibBadRecursiveResult.result} \n`,
   `fibo bad recursion: ${fibBadRecursiveResult.endTime}`);
 
+
+var arr = [1,2,3,5,6,4,8,9];
+console.log(findMissingNum(arr));
